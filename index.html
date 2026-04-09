@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Word Bomb - 영어 단어 퀴즈</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&family=Bangers&display=swap" rel="stylesheet">
+<script src="lessons_data.js"></script>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0a0a2e;
+  --card: #141450;
+  --accent: #ff6b35;
+  --accent2: #ffd700;
+  --correct: #00e676;
+  --wrong: #ff1744;
+  --text: #f0f0f0;
+  --fuse: #ff6b35;
+}
+
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-y: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ===== SCREEN: SELECT ===== */
+#select-screen {
+  text-align: center;
+  animation: fadeIn 0.6s ease;
+  padding: 2em 1em;
+  max-width: 720px;
+  width: 100%;
+}
+#select-screen h1 {
+  font-family: 'Bangers', cursive;
+  font-size: 4.5rem;
+  color: var(--accent);
+  text-shadow: 0 0 40px rgba(255,107,53,0.5), 0 4px 0 #c44a1a;
+  letter-spacing: 4px;
+  margin-bottom: 0.1em;
+}
+#select-screen .app-subtitle {
+  font-size: 1.1rem;
+  color: #888;
+  margin-bottom: 1.8em;
+}
+
+.lesson-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1em;
+  margin-bottom: 1.5em;
+}
+
+.lesson-card {
+  font-family: 'Noto Sans KR', sans-serif;
+  background: var(--card);
+  border: 2px solid #333;
+  border-radius: 16px;
+  padding: 1.2em 1em;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  color: var(--text);
+  position: relative;
+  min-height: 90px;
+  touch-action: manipulation;
+}
+.lesson-card:hover, .lesson-card:focus {
+  border-color: var(--accent2);
+  background: #1c1c60;
+  outline: none;
+  transform: scale(1.03);
+  box-shadow: 0 4px 20px rgba(255,215,0,0.15);
+}
+.lesson-card:active {
+  transform: scale(0.98);
+}
+.lesson-card.loading {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.lesson-num {
+  font-family: 'Bangers', cursive;
+  font-size: 2.2rem;
+  color: var(--accent);
+  line-height: 1;
+  flex-shrink: 0;
+  width: 50px;
+  text-align: center;
+}
+.lesson-info {
+  flex: 1;
+  min-width: 0;
+}
+.lesson-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0.3em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.lesson-meta {
+  display: flex;
+  gap: 0.8em;
+  font-size: 0.85rem;
+  color: #888;
+}
+.lesson-meta .best {
+  color: var(--accent2);
+}
+.lesson-badge {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  font-size: 1.2rem;
+}
+
+.total-stats {
+  font-size: 0.95rem;
+  color: #666;
+  margin-bottom: 1em;
+}
+.select-hint {
+  font-size: 0.85rem;
+  color: #555;
+}
+
+/* ===== SCREEN: START ===== */
+#start-screen {
+  display: none;
+  text-align: center;
+  animation: fadeIn 0.6s ease;
+}
+#start-screen h1 {
+  font-family: 'Bangers', cursive;
+  font-size: 5rem;
+  color: var(--accent);
+  text-shadow: 0 0 40px rgba(255,107,53,0.5), 0 4px 0 #c44a1a;
+  letter-spacing: 4px;
+  margin-bottom: 0.2em;
+}
+#start-screen .subtitle {
+  font-size: 1.4rem;
+  color: var(--accent2);
+  margin-bottom: 2em;
+}
+.bomb-icon {
+  font-size: 6rem;
+  display: block;
+  margin: 0 auto 1em;
+  animation: wobble 2s ease-in-out infinite;
+}
+.start-btn {
+  font-family: 'Bangers', cursive;
+  font-size: 2rem;
+  padding: 0.6em 2em;
+  background: linear-gradient(135deg, var(--accent), #ff8c42);
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(255,107,53,0.4);
+  transition: transform 0.2s, box-shadow 0.2s;
+  letter-spacing: 2px;
+}
+.start-btn:hover, .start-btn:focus {
+  transform: scale(1.08);
+  box-shadow: 0 8px 30px rgba(255,107,53,0.6);
+  outline: 3px solid var(--accent2);
+  outline-offset: 4px;
+}
+
+.back-btn {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 0.5em 1.2em;
+  background: transparent;
+  color: #888;
+  border: 2px solid #444;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 1.2em;
+}
+.back-btn:hover, .back-btn:focus {
+  color: var(--accent2);
+  border-color: var(--accent2);
+  outline: none;
+}
+
+/* ===== SCREEN: GAME ===== */
+#game-screen { display: none; width: 100%; max-width: 900px; padding: 1.5em; }
+
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1em;
+}
+.score-display {
+  font-family: 'Bangers', cursive;
+  font-size: 1.8rem;
+  color: var(--accent2);
+}
+.combo-display {
+  font-family: 'Bangers', cursive;
+  font-size: 1.4rem;
+  color: var(--accent);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.combo-display.active { opacity: 1; }
+.progress-text { font-size: 1rem; color: #888; }
+
+/* BOMB AREA */
+.bomb-area {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5em;
+  margin-bottom: 1.2em;
+}
+.bomb-visual {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  flex-shrink: 0;
+}
+.bomb-body {
+  width: 100px;
+  height: 100px;
+  background: radial-gradient(circle at 35% 35%, #555, #1a1a1a);
+  border-radius: 50%;
+  position: absolute;
+  bottom: 0;
+  left: 10px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+}
+.bomb-fuse {
+  position: absolute;
+  top: 5px;
+  left: 55px;
+  width: 4px;
+  height: 40px;
+  background: var(--fuse);
+  border-radius: 2px;
+  transform-origin: bottom center;
+  animation: fuseFlicker 0.3s ease-in-out infinite alternate;
+}
+.bomb-spark {
+  position: absolute;
+  top: 0;
+  left: 50px;
+  width: 14px;
+  height: 14px;
+  background: radial-gradient(circle, #fff, var(--accent2), transparent);
+  border-radius: 50%;
+  animation: sparkle 0.2s ease-in-out infinite alternate;
+}
+.bomb-visual.exploding .bomb-body { animation: explodeBody 0.5s forwards; }
+.bomb-visual.exploding .bomb-fuse,
+.bomb-visual.exploding .bomb-spark { display: none; }
+.bomb-visual.defused .bomb-fuse { background: #555; }
+.bomb-visual.defused .bomb-spark { display: none; }
+
+/* TIMER BAR */
+.timer-container { flex: 1; max-width: 500px; }
+.timer-bar-bg {
+  height: 28px;
+  background: #222;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 2px solid #444;
+}
+.timer-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--wrong), var(--accent), var(--accent2));
+  border-radius: 12px;
+  transition: width 0.1s linear;
+  width: 100%;
+}
+.timer-text {
+  text-align: center;
+  font-family: 'Bangers', cursive;
+  font-size: 1.2rem;
+  margin-top: 0.3em;
+  color: var(--accent2);
+}
+
+/* DEFINITION CARD */
+.def-card {
+  background: var(--card);
+  border: 2px solid #333;
+  border-radius: 16px;
+  padding: 1.5em 2em;
+  margin-bottom: 1.2em;
+  min-height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.def-card .definition { font-size: 1.5rem; line-height: 1.6; color: #ddd; }
+
+/* CHOICES */
+.choices {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.8em;
+  margin-bottom: 1em;
+}
+.choice-btn {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  padding: 0.8em 1em;
+  background: var(--card);
+  color: var(--text);
+  border: 2px solid #444;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: left;
+  position: relative;
+}
+.choice-btn .key-hint {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  line-height: 32px;
+  text-align: center;
+  background: #333;
+  border-radius: 6px;
+  margin-right: 0.6em;
+  font-family: 'Bangers', cursive;
+  color: var(--accent2);
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+.choice-btn:hover, .choice-btn:focus {
+  border-color: var(--accent2);
+  background: #1c1c60;
+  outline: none;
+  transform: scale(1.03);
+}
+.choice-btn:disabled { cursor: default; transform: none; }
+.choice-btn.correct {
+  border-color: var(--correct);
+  background: rgba(0,230,118,0.15);
+  color: var(--correct);
+}
+.choice-btn.wrong {
+  border-color: var(--wrong);
+  background: rgba(255,23,68,0.15);
+  color: var(--wrong);
+}
+
+/* RESULT OVERLAY */
+.result-banner {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  font-family: 'Bangers', cursive;
+  font-size: 4rem;
+  z-index: 100;
+  pointer-events: none;
+  text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+  transition: transform 0.3s cubic-bezier(0.175,0.885,0.32,1.275), opacity 0.3s;
+  opacity: 0;
+}
+.result-banner.show {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+}
+
+/* WORD INFO */
+.word-info {
+  background: var(--card);
+  border: 2px solid #444;
+  border-radius: 12px;
+  padding: 1em 1.5em;
+  margin-top: 0.8em;
+  display: none;
+  animation: fadeIn 0.4s ease;
+}
+.word-info .word-main {
+  font-family: 'Bangers', cursive;
+  font-size: 2rem;
+  color: var(--accent2);
+  margin-bottom: 0.3em;
+}
+.word-info .word-korean { font-size: 1.2rem; color: #aaa; }
+.word-info .word-example { font-size: 1.1rem; color: #ccc; margin-top: 0.5em; font-style: italic; }
+
+.pron-btn {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 1rem;
+  padding: 0.4em 1em;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 0.5em;
+  transition: background 0.2s;
+}
+.pron-btn:hover, .pron-btn:focus {
+  background: #ff8c42;
+  outline: 3px solid var(--accent2);
+  outline-offset: 2px;
+}
+
+.next-btn {
+  display: none;
+  font-family: 'Bangers', cursive;
+  font-size: 1.5rem;
+  padding: 0.5em 2em;
+  background: linear-gradient(135deg, var(--accent), #ff8c42);
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  margin: 1em auto 0;
+  box-shadow: 0 4px 15px rgba(255,107,53,0.3);
+  transition: transform 0.2s;
+}
+.next-btn:hover, .next-btn:focus {
+  transform: scale(1.06);
+  outline: 3px solid var(--accent2);
+  outline-offset: 4px;
+}
+
+/* ===== SCREEN: END ===== */
+#end-screen {
+  display: none;
+  text-align: center;
+  animation: fadeIn 0.6s ease;
+}
+#end-screen h1 {
+  font-family: 'Bangers', cursive;
+  font-size: 3.5rem;
+  color: var(--accent2);
+  margin-bottom: 0.5em;
+}
+.final-score {
+  font-family: 'Bangers', cursive;
+  font-size: 5rem;
+  color: var(--accent);
+  text-shadow: 0 0 30px rgba(255,107,53,0.4);
+}
+.final-stats { font-size: 1.2rem; color: #aaa; margin: 1em 0 1.5em; line-height: 2; }
+.end-buttons { display: flex; gap: 1em; justify-content: center; flex-wrap: wrap; }
+
+/* PARTICLES & CONFETTI */
+.particle {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 200;
+}
+.confetti {
+  position: fixed;
+  width: 8px;
+  height: 18px;
+  pointer-events: none;
+  z-index: 200;
+}
+
+/* SR ONLY */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ANIMATIONS */
+@keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes wobble { 0%, 100% { transform: rotate(-3deg); } 50% { transform: rotate(3deg); } }
+@keyframes fuseFlicker { from { opacity: 0.7; } to { opacity: 1; } }
+@keyframes sparkle { from { transform: scale(0.8); opacity: 0.6; } to { transform: scale(1.3); opacity: 1; } }
+@keyframes explodeBody {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.5); opacity: 0.8; }
+  100% { transform: scale(0); opacity: 0; }
+}
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-8px); }
+  40% { transform: translateX(8px); }
+  60% { transform: translateX(-5px); }
+  80% { transform: translateX(5px); }
+}
+
+/* ===== MOBILE RESPONSIVE ===== */
+@media (max-width: 600px) {
+  #select-screen h1 { font-size: 3rem; }
+  #select-screen { padding: 1.2em 0.8em; }
+  .lesson-grid { grid-template-columns: 1fr; }
+  .lesson-card { min-height: 70px; }
+  .lesson-num { font-size: 1.8rem; width: 40px; }
+  .bomb-icon { font-size: 4rem; }
+  #start-screen h1 { font-size: 3rem; }
+  .start-btn { font-size: 1.5rem; padding: 0.5em 1.5em; }
+  #game-screen { padding: 0.8em; }
+  .top-bar { margin-bottom: 0.6em; }
+  .score-display { font-size: 1.3rem; }
+  .bomb-area { gap: 0.8em; margin-bottom: 0.8em; }
+  .bomb-visual { width: 80px; height: 80px; }
+  .bomb-body { width: 65px; height: 65px; left: 7px; }
+  .bomb-fuse { left: 35px; }
+  .bomb-spark { left: 32px; }
+  .def-card { padding: 1em; min-height: 70px; margin-bottom: 0.8em; }
+  .def-card .definition { font-size: 1.15rem; }
+  .choices { gap: 0.5em; }
+  .choice-btn { font-size: 1rem; padding: 0.7em 0.8em; min-height: 48px; }
+  .next-btn { font-size: 1.2rem; }
+  .word-info { padding: 0.8em 1em; }
+  .word-info .word-main { font-size: 1.5rem; }
+  .word-info .word-korean { font-size: 1rem; }
+  .word-info .word-example { font-size: 0.95rem; }
+  .pron-btn { min-height: 44px; }
+  .result-banner { font-size: 2.5rem; }
+  #end-screen h1 { font-size: 2.5rem; }
+  .final-score { font-size: 3rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- LIVE REGION for screen readers -->
+<div id="sr-announce" class="sr-only" aria-live="assertive" aria-atomic="true"></div>
+
+<!-- ===== SELECT SCREEN ===== -->
+<div id="select-screen" role="main" aria-label="Word Bomb 레슨 선택">
+  <span class="bomb-icon" aria-hidden="true">💣</span>
+  <h1>WORD BOMB</h1>
+  <p class="app-subtitle">중학교 1학년 영어 단어 퀴즈</p>
+  <div class="lesson-grid" id="lesson-grid" role="list" aria-label="레슨 목록"></div>
+  <div class="total-stats" id="total-stats"></div>
+  <p class="select-hint">레슨을 선택하여 게임을 시작하세요</p>
+</div>
+
+<!-- ===== START SCREEN ===== -->
+<div id="start-screen" role="main" aria-label="Word Bomb 게임 시작 화면">
+  <span class="bomb-icon" aria-hidden="true">💣</span>
+  <h1>WORD BOMB</h1>
+  <p class="subtitle" id="lesson-subtitle"></p>
+  <p style="color:#888; margin-bottom:1.5em; font-size:1.1rem;">영영 풀이를 읽고 올바른 단어를 맞추세요!</p>
+  <button class="start-btn" id="start-btn">START</button>
+  <p style="color:#666; margin-top:1.5em; font-size:0.9rem;">
+    <kbd>1</kbd>~<kbd>4</kbd> 선택 &nbsp;|&nbsp; <kbd>R</kbd> 발음 듣기 &nbsp;|&nbsp; <kbd>Space</kbd> 다음
+  </p>
+  <button class="back-btn" id="back-from-start">← LESSONS</button>
+</div>
+
+<!-- ===== GAME SCREEN ===== -->
+<div id="game-screen" role="main" aria-label="Word Bomb 게임">
+  <div class="top-bar">
+    <div>
+      <span class="score-display" aria-label="점수">SCORE: <span id="score-val">0</span></span>
+      <span class="combo-display" id="combo-display" aria-label="콤보">COMBO x1</span>
+    </div>
+    <span class="progress-text" id="progress-text" aria-label="진행 상황">1 / 22</span>
+  </div>
+
+  <div class="bomb-area">
+    <div class="bomb-visual" id="bomb-visual" aria-hidden="true">
+      <div class="bomb-spark" id="bomb-spark"></div>
+      <div class="bomb-fuse" id="bomb-fuse"></div>
+      <div class="bomb-body"></div>
+    </div>
+    <div class="timer-container">
+      <div class="timer-bar-bg" role="progressbar" aria-label="남은 시간" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100">
+        <div class="timer-bar-fill" id="timer-fill"></div>
+      </div>
+      <div class="timer-text" id="timer-text">10s</div>
+    </div>
+  </div>
+
+  <div class="def-card" id="def-card" tabindex="-1">
+    <p class="definition" id="definition-text"></p>
+  </div>
+
+  <div class="choices" id="choices" role="group" aria-label="선택지">
+    <button class="choice-btn" data-idx="0"><span class="key-hint" aria-hidden="true">1</span><span class="choice-text"></span></button>
+    <button class="choice-btn" data-idx="1"><span class="key-hint" aria-hidden="true">2</span><span class="choice-text"></span></button>
+    <button class="choice-btn" data-idx="2"><span class="key-hint" aria-hidden="true">3</span><span class="choice-text"></span></button>
+    <button class="choice-btn" data-idx="3"><span class="key-hint" aria-hidden="true">4</span><span class="choice-text"></span></button>
+  </div>
+
+  <div class="word-info" id="word-info" tabindex="-1">
+    <div class="word-main" id="info-word"></div>
+    <div class="word-korean" id="info-korean"></div>
+    <div class="word-example" id="info-example"></div>
+    <button class="pron-btn" id="pron-btn" aria-label="발음 듣기 (R키)">🔊 발음 듣기 (R)</button>
+  </div>
+
+  <button class="next-btn" id="next-btn">NEXT &rarr;</button>
+</div>
+
+<!-- RESULT BANNER -->
+<div class="result-banner" id="result-banner" aria-hidden="true"></div>
+
+<!-- ===== END SCREEN ===== -->
+<div id="end-screen" role="main" aria-label="게임 결과">
+  <h1>GAME OVER!</h1>
+  <div class="final-score" id="final-score">0</div>
+  <div style="color:#888; font-size:1.2rem;">POINTS</div>
+  <div class="final-stats" id="final-stats"></div>
+  <div class="end-buttons">
+    <button class="start-btn" id="restart-btn">PLAY AGAIN</button>
+    <button class="back-btn" id="back-from-end">← LESSONS</button>
+  </div>
+</div>
+
+<script>
+// ===== LESSON STATE =====
+let activeLesson = null;
+let VOCAB = [];
+let activeAudioData = null;
+
+// ===== AUDIO LOADER =====
+function loadLessonAudio(lessonId) {
+  return new Promise((resolve) => {
+    const varName = 'AUDIO_L' + lessonId;
+    if (window[varName]) {
+      activeAudioData = window[varName];
+      resolve();
+      return;
+    }
+    const script = document.createElement('script');
+    script.src = 'audio_L' + lessonId + '.js';
+    script.onload = () => {
+      activeAudioData = window[varName];
+      resolve();
+    };
+    script.onerror = () => {
+      activeAudioData = {};
+      resolve();
+    };
+    document.head.appendChild(script);
+  });
+}
+
+// ===== LOCALSTORAGE =====
+function loadScores() {
+  try { return JSON.parse(localStorage.getItem('wordbomb_scores') || '{}'); }
+  catch (e) { return {}; }
+}
+
+function saveHighScore(lessonId, score, correct, total) {
+  try {
+    const scores = loadScores();
+    const key = 'L' + lessonId;
+    const pct = Math.round((correct / total) * 100);
+    const prev = scores[key] || { bestScore: 0, bestPct: 0, attempts: 0 };
+    scores[key] = {
+      bestScore: Math.max(prev.bestScore, score),
+      bestPct: Math.max(prev.bestPct, pct),
+      attempts: prev.attempts + 1,
+      lastPlayed: new Date().toISOString().slice(0, 10)
+    };
+    localStorage.setItem('wordbomb_scores', JSON.stringify(scores));
+  } catch (e) { /* localStorage unavailable */ }
+}
+
+// ===== LESSON SELECT =====
+function renderLessonGrid() {
+  const grid = document.getElementById('lesson-grid');
+  const scores = loadScores();
+  grid.innerHTML = '';
+
+  LESSONS.forEach(lesson => {
+    const card = document.createElement('button');
+    card.className = 'lesson-card';
+    card.setAttribute('role', 'listitem');
+    card.dataset.lesson = lesson.id;
+
+    const data = scores['L' + lesson.id];
+    const bestText = data ? data.bestScore + 'pts (' + data.bestPct + '%)' : '--';
+    const badge = (data && data.bestPct >= 70) ? '⭐' : '';
+
+    card.setAttribute('aria-label',
+      'Lesson ' + lesson.id + ': ' + lesson.title + ', ' + lesson.wordCount + ' words' +
+      (data ? ', Best: ' + bestText : ''));
+
+    card.innerHTML =
+      '<div class="lesson-num">L' + lesson.id + '</div>' +
+      '<div class="lesson-info">' +
+        '<div class="lesson-title">' + lesson.title + '</div>' +
+        '<div class="lesson-meta">' +
+          '<span>' + lesson.wordCount + ' words</span>' +
+          '<span class="best">' + bestText + '</span>' +
+        '</div>' +
+      '</div>' +
+      (badge ? '<div class="lesson-badge">' + badge + '</div>' : '');
+
+    card.addEventListener('click', () => selectLesson(lesson.id));
+    grid.appendChild(card);
+  });
+
+  // Total stats
+  const completedCount = LESSONS.filter(l => {
+    const d = scores['L' + l.id];
+    return d && d.bestPct >= 70;
+  }).length;
+  const totalEl = document.getElementById('total-stats');
+  if (LESSONS.length > 1) {
+    totalEl.textContent = completedCount + ' / ' + LESSONS.length + ' lessons completed';
+  } else {
+    totalEl.textContent = '';
+  }
+}
+
+function selectLesson(lessonId) {
+  activeLesson = LESSONS.find(l => l.id === lessonId);
+  if (!activeLesson) return;
+  VOCAB = activeLesson.vocab;
+
+  // Show loading state on card
+  const card = document.querySelector('[data-lesson="' + lessonId + '"]');
+  if (card) card.classList.add('loading');
+
+  announce('Lesson ' + lessonId + ' 로딩 중...');
+
+  loadLessonAudio(lessonId).then(() => {
+    if (card) card.classList.remove('loading');
+    showStartScreen();
+  });
+}
+
+function showSelectScreen() {
+  hideAllScreens();
+  document.getElementById('select-screen').style.display = 'block';
+  renderLessonGrid();
+  // Focus first card
+  const firstCard = document.querySelector('.lesson-card');
+  if (firstCard) firstCard.focus();
+  announce('레슨 선택 화면. ' + LESSONS.length + '개 레슨 중 선택하세요.');
+}
+
+function showStartScreen() {
+  hideAllScreens();
+  document.getElementById('start-screen').style.display = 'block';
+  document.getElementById('lesson-subtitle').textContent = activeLesson.subtitle;
+  document.getElementById('start-btn').focus();
+  announce(activeLesson.subtitle + '. ' + activeLesson.wordCount + '개 단어. Space 또는 Start를 눌러 시작하세요.');
+}
+
+function hideAllScreens() {
+  document.getElementById('select-screen').style.display = 'none';
+  document.getElementById('start-screen').style.display = 'none';
+  document.getElementById('game-screen').style.display = 'none';
+  document.getElementById('end-screen').style.display = 'none';
+}
+
+// ===== AUDIO ENGINE (Web Audio API) =====
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+function playTone(freq, duration, type, volume) {
+  type = type || 'sine';
+  volume = volume || 0.3;
+  const osc = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+  osc.type = type;
+  osc.frequency.value = freq;
+  gain.gain.setValueAtTime(volume, audioCtx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+  osc.connect(gain).connect(audioCtx.destination);
+  osc.start();
+  osc.stop(audioCtx.currentTime + duration);
+}
+
+function playCorrectSound() {
+  playTone(523, 0.12, 'sine', 0.25);
+  setTimeout(function() { playTone(659, 0.12, 'sine', 0.25); }, 100);
+  setTimeout(function() { playTone(784, 0.2, 'sine', 0.3); }, 200);
+  setTimeout(function() { playTone(1047, 0.35, 'sine', 0.25); }, 300);
+}
+
+function playWrongSound() {
+  playTone(300, 0.2, 'sawtooth', 0.2);
+  setTimeout(function() { playTone(200, 0.4, 'sawtooth', 0.25); }, 150);
+}
+
+function playExplosionSound() {
+  const bufferSize = audioCtx.sampleRate * 0.8;
+  const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+  const data = buffer.getChannelData(0);
+  for (let i = 0; i < bufferSize; i++) {
+    data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / bufferSize, 2);
+  }
+  const source = audioCtx.createBufferSource();
+  source.buffer = buffer;
+  const gain = audioCtx.createGain();
+  gain.gain.setValueAtTime(0.5, audioCtx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.8);
+  source.connect(gain).connect(audioCtx.destination);
+  source.start();
+}
+
+function playTickSound() { playTone(800, 0.05, 'square', 0.08); }
+
+function playDefuseSound() {
+  playTone(880, 0.1, 'sine', 0.15);
+  setTimeout(function() { playTone(1100, 0.15, 'sine', 0.2); }, 80);
+  setTimeout(function() { playTone(1320, 0.3, 'triangle', 0.15); }, 160);
+}
+
+function playComboSound(level) {
+  const base = 600 + level * 100;
+  playTone(base, 0.08, 'sine', 0.2);
+  setTimeout(function() { playTone(base + 200, 0.08, 'sine', 0.2); }, 60);
+  setTimeout(function() { playTone(base + 400, 0.15, 'sine', 0.25); }, 120);
+}
+
+function playCountdownUrgent() { playTone(1000, 0.06, 'square', 0.15); }
+
+// ===== PRONUNCIATION AUDIO =====
+let currentPronAudio = null;
+function playAudioFile(audioFile) {
+  if (currentPronAudio) { currentPronAudio.pause(); }
+  const key = audioFile.replace('.wav', '');
+  const src = (activeAudioData && activeAudioData[key])
+    ? activeAudioData[key]
+    : 'audio/' + audioFile;
+  currentPronAudio = new Audio(src);
+  currentPronAudio.play().catch(function() {});
+}
+function playPronunciation(audioFile) { playAudioFile(audioFile); }
+function playDefinitionAudio(audioFile) { playAudioFile(audioFile); }
+
+// ===== PARTICLES =====
+function spawnExplosionParticles(cx, cy) {
+  const colors = ['#ff6b35', '#ffd700', '#ff1744', '#ff9100', '#fff'];
+  for (let i = 0; i < 30; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.left = cx + 'px';
+    p.style.top = cy + 'px';
+    p.style.background = colors[Math.floor(Math.random() * colors.length)];
+    p.style.width = p.style.height = (6 + Math.random() * 10) + 'px';
+    document.body.appendChild(p);
+    const angle = Math.random() * Math.PI * 2;
+    const dist = 100 + Math.random() * 200;
+    const dx = Math.cos(angle) * dist;
+    const dy = Math.sin(angle) * dist;
+    p.animate([
+      { transform: 'translate(0,0) scale(1)', opacity: 1 },
+      { transform: 'translate(' + dx + 'px, ' + dy + 'px) scale(0)', opacity: 0 }
+    ], { duration: 600 + Math.random() * 400, easing: 'ease-out' })
+    .onfinish = function() { p.remove(); };
+  }
+}
+
+function spawnConfetti() {
+  const colors = ['#ff6b35', '#ffd700', '#00e676', '#2196f3', '#e040fb', '#ff1744'];
+  for (let i = 0; i < 50; i++) {
+    const c = document.createElement('div');
+    c.className = 'confetti';
+    c.style.left = Math.random() * window.innerWidth + 'px';
+    c.style.top = -20 + 'px';
+    c.style.background = colors[Math.floor(Math.random() * colors.length)];
+    c.style.transform = 'rotate(' + (Math.random()*360) + 'deg)';
+    document.body.appendChild(c);
+    const dist = window.innerHeight + 40;
+    const rot = 360 + Math.random() * 720;
+    c.animate([
+      { transform: 'translateY(0) rotate(0deg)', opacity: 1 },
+      { transform: 'translateY(' + dist + 'px) rotate(' + rot + 'deg)', opacity: 0.7 }
+    ], { duration: 1500 + Math.random() * 1500, easing: 'ease-in', delay: Math.random() * 500 })
+    .onfinish = function() { c.remove(); };
+  }
+}
+
+// ===== SCREEN READER =====
+function announce(msg) {
+  const el = document.getElementById('sr-announce');
+  el.textContent = '';
+  requestAnimationFrame(function() { el.textContent = msg; });
+}
+
+// ===== GAME STATE =====
+let gameState = 'select';
+let currentIndex = 0;
+let score = 0;
+let combo = 0;
+let maxCombo = 0;
+let correctCount = 0;
+let shuffledVocab = [];
+let timerInterval = null;
+let timeLeft = 0;
+let tickCounter = 0;
+
+const $ = function(id) { return document.getElementById(id); };
+const choiceBtns = document.querySelectorAll('.choice-btn');
+
+function getTimeLimit(idx) {
+  const total = VOCAB.length;
+  const third = Math.ceil(total / 3);
+  if (idx < third) return 10;
+  if (idx < third * 2) return 8;
+  return 6;
+}
+
+function shuffle(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    var tmp = a[i]; a[i] = a[j]; a[j] = tmp;
+  }
+  return a;
+}
+
+function startGame() {
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+  score = 0;
+  combo = 0;
+  maxCombo = 0;
+  correctCount = 0;
+  currentIndex = 0;
+  shuffledVocab = shuffle(VOCAB);
+  hideAllScreens();
+  $('game-screen').style.display = 'block';
+  updateScore();
+  loadQuestion();
+}
+
+function updateScore() {
+  $('score-val').textContent = score;
+  const comboEl = $('combo-display');
+  if (combo >= 2) {
+    comboEl.textContent = 'COMBO x' + combo;
+    comboEl.classList.add('active');
+  } else {
+    comboEl.classList.remove('active');
+  }
+}
+
+function loadQuestion() {
+  gameState = 'playing';
+  const item = shuffledVocab[currentIndex];
+  $('progress-text').textContent = (currentIndex + 1) + ' / ' + shuffledVocab.length;
+
+  var def = item.eng_def.replace(/^[a-z]+\.\s*/i, '');
+  $('definition-text').textContent = def;
+
+  var wrongPool = VOCAB.filter(function(v) { return v.word !== item.word; });
+  var wrongChoices = shuffle(wrongPool).slice(0, 3);
+  var allChoices = shuffle([item].concat(wrongChoices));
+
+  choiceBtns.forEach(function(btn, i) {
+    btn.querySelector('.choice-text').textContent = allChoices[i].word;
+    btn.dataset.word = allChoices[i].word;
+    btn.dataset.correct = allChoices[i].word === item.word ? '1' : '0';
+    btn.className = 'choice-btn';
+    btn.disabled = false;
+  });
+
+  $('word-info').style.display = 'none';
+  $('next-btn').style.display = 'none';
+  $('bomb-visual').className = 'bomb-visual';
+
+  var limit = getTimeLimit(currentIndex);
+  timeLeft = limit * 10;
+  tickCounter = 0;
+  $('timer-fill').style.width = '100%';
+  $('timer-text').textContent = limit + 's';
+  $('timer-fill').style.background = 'linear-gradient(90deg, var(--wrong), var(--accent), var(--accent2))';
+
+  clearInterval(timerInterval);
+  timerInterval = setInterval(function() {
+    timeLeft--;
+    tickCounter++;
+    var pct = (timeLeft / (limit * 10)) * 100;
+    $('timer-fill').style.width = pct + '%';
+    $('timer-text').textContent = (timeLeft / 10).toFixed(1) + 's';
+
+    if (tickCounter % 10 === 0) playTickSound();
+    if (timeLeft <= 30 && timeLeft > 0 && tickCounter % 5 === 0) {
+      playCountdownUrgent();
+      $('timer-fill').style.background = 'linear-gradient(90deg, var(--wrong), #ff4444)';
+    }
+
+    var fuseH = 40 * (timeLeft / (limit * 10));
+    $('bomb-fuse').style.height = Math.max(0, fuseH) + 'px';
+    $('bomb-spark').style.top = (5 + (40 - fuseH)) + 'px';
+
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval);
+      handleTimeUp();
+    }
+  }, 100);
+
+  $('def-card').focus();
+  announce('문제 ' + (currentIndex + 1) + '. 영영 풀이: ' + def + '. 1번부터 4번까지 선택하세요. 제한 시간 ' + limit + '초.');
+  if (item.def_audio) { playDefinitionAudio(item.def_audio); }
+}
+
+function handleTimeUp() {
+  gameState = 'answered';
+  combo = 0;
+
+  choiceBtns.forEach(function(btn) {
+    btn.disabled = true;
+    if (btn.dataset.correct === '1') btn.classList.add('correct');
+  });
+
+  var bv = $('bomb-visual');
+  bv.classList.add('exploding');
+  var rect = bv.getBoundingClientRect();
+  spawnExplosionParticles(rect.left + rect.width/2, rect.top + rect.height/2);
+  playExplosionSound();
+
+  $('game-screen').style.animation = 'shake 0.5s';
+  setTimeout(function() { $('game-screen').style.animation = ''; }, 500);
+
+  showBanner('BOOM!', 'var(--wrong)');
+  showWordInfo();
+  announce('시간 초과! 폭탄이 터졌습니다. 정답은 ' + shuffledVocab[currentIndex].word + '입니다.');
+}
+
+function handleAnswer(idx) {
+  if (gameState !== 'playing') return;
+  gameState = 'answered';
+  clearInterval(timerInterval);
+
+  var btn = choiceBtns[idx];
+  var isCorrect = btn.dataset.correct === '1';
+  var item = shuffledVocab[currentIndex];
+
+  choiceBtns.forEach(function(b) {
+    b.disabled = true;
+    if (b.dataset.correct === '1') b.classList.add('correct');
+  });
+
+  if (isCorrect) {
+    combo++;
+    if (combo > maxCombo) maxCombo = combo;
+    correctCount++;
+    var timeBonus = Math.ceil(timeLeft / 10);
+    var comboMultiplier = Math.min(combo, 5);
+    var points = (10 + timeBonus) * comboMultiplier;
+    score += points;
+
+    playDefuseSound();
+    if (combo >= 2) playComboSound(combo);
+
+    $('bomb-visual').classList.add('defused');
+    showBanner(combo >= 3 ? 'COMBO x' + combo + '!' : 'DEFUSED!', 'var(--correct)');
+    spawnConfetti();
+    announce('정답! ' + item.word + '. ' + points + '점 획득.' + (combo >= 2 ? ' 콤보 ' + combo + '!' : ''));
+  } else {
+    combo = 0;
+    btn.classList.add('wrong');
+
+    var bv = $('bomb-visual');
+    bv.classList.add('exploding');
+    var rect = bv.getBoundingClientRect();
+    spawnExplosionParticles(rect.left + rect.width/2, rect.top + rect.height/2);
+    playExplosionSound();
+
+    $('game-screen').style.animation = 'shake 0.5s';
+    setTimeout(function() { $('game-screen').style.animation = ''; }, 500);
+
+    showBanner('BOOM!', 'var(--wrong)');
+    announce('오답! 정답은 ' + item.word + '입니다.');
+  }
+
+  updateScore();
+  showWordInfo();
+}
+
+function showBanner(text, color) {
+  var b = $('result-banner');
+  b.textContent = text;
+  b.style.color = color;
+  b.classList.add('show');
+  setTimeout(function() { b.classList.remove('show'); }, 1200);
+}
+
+function showWordInfo() {
+  var item = shuffledVocab[currentIndex];
+  $('info-word').textContent = item.word;
+  $('info-korean').textContent = item.korean;
+  $('info-example').textContent = item.example;
+  $('word-info').style.display = 'block';
+  $('next-btn').style.display = 'block';
+
+  setTimeout(function() { $('next-btn').focus(); }, 300);
+}
+
+function nextQuestion() {
+  currentIndex++;
+  if (currentIndex >= shuffledVocab.length) {
+    showEndScreen();
+  } else {
+    loadQuestion();
+  }
+}
+
+function showEndScreen() {
+  gameState = 'end';
+  hideAllScreens();
+  $('end-screen').style.display = 'block';
+  $('final-score').textContent = score;
+  var pct = Math.round((correctCount / VOCAB.length) * 100);
+  $('final-stats').innerHTML =
+    '정답: ' + correctCount + ' / ' + VOCAB.length + ' (' + pct + '%)<br>' +
+    '최고 콤보: x' + maxCombo;
+  $('restart-btn').focus();
+
+  // Save high score
+  if (activeLesson) saveHighScore(activeLesson.id, score, correctCount, VOCAB.length);
+
+  spawnConfetti();
+  setTimeout(spawnConfetti, 700);
+
+  if (pct >= 70) {
+    [0,100,200,300,400].forEach(function(d,i) {
+      setTimeout(function() { playTone(523*(1+i*0.12), 0.2, 'sine', 0.2); }, d);
+    });
+  } else {
+    playTone(350, 0.5, 'triangle', 0.15);
+  }
+  announce('게임 종료! 최종 점수 ' + score + '점. 정답 ' + correctCount + '개 중 ' + VOCAB.length + '개. 최고 콤보 ' + maxCombo + '.');
+}
+
+// ===== EVENT LISTENERS =====
+$('start-btn').addEventListener('click', startGame);
+$('restart-btn').addEventListener('click', startGame);
+$('next-btn').addEventListener('click', nextQuestion);
+$('pron-btn').addEventListener('click', function() {
+  playPronunciation(shuffledVocab[currentIndex].audio);
+});
+$('back-from-start').addEventListener('click', showSelectScreen);
+$('back-from-end').addEventListener('click', showSelectScreen);
+
+choiceBtns.forEach(function(btn, i) {
+  btn.addEventListener('click', function() { handleAnswer(i); });
+  btn.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      e.stopPropagation();
+      handleAnswer(i);
+    }
+  });
+});
+
+// Global keyboard handler
+document.addEventListener('keydown', function(e) {
+  if (e.key === ' ' || e.key === 'Spacebar') {
+    // Don't intercept Space on lesson cards or back buttons
+    if (gameState === 'select') return;
+    e.preventDefault();
+    if (gameState === 'start') {
+      startGame();
+    } else if (gameState === 'answered') {
+      nextQuestion();
+    } else if (gameState === 'end') {
+      startGame();
+    }
+  }
+
+  if (e.key === 'Escape') {
+    if (gameState === 'start') {
+      e.preventDefault();
+      showSelectScreen();
+    } else if (gameState === 'end') {
+      e.preventDefault();
+      showSelectScreen();
+    }
+  }
+
+  if (gameState === 'playing') {
+    if (e.key >= '1' && e.key <= '4') {
+      e.preventDefault();
+      handleAnswer(parseInt(e.key) - 1);
+    }
+  }
+
+  if (gameState === 'answered' && (e.key === 'r' || e.key === 'R')) {
+    e.preventDefault();
+    playPronunciation(shuffledVocab[currentIndex].audio);
+  }
+});
+
+// Prevent Space on buttons from double-firing
+document.querySelectorAll('button').forEach(function(btn) {
+  btn.addEventListener('keydown', function(e) {
+    if (e.key === ' ' && !btn.classList.contains('lesson-card') && !btn.classList.contains('back-btn')) {
+      e.preventDefault();
+    }
+  });
+});
+
+// ===== INIT =====
+gameState = 'select';
+renderLessonGrid();
+</script>
+</body>
+</html>
