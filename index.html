@@ -636,6 +636,7 @@ body {
   <div class="final-stats" id="final-stats"></div>
   <div class="end-buttons">
     <button class="start-btn" id="restart-btn">PLAY AGAIN</button>
+    <button class="start-btn" id="next-lesson-btn" style="display:none;">NEXT LESSON →</button>
     <button class="back-btn" id="back-from-end">← LESSONS</button>
   </div>
 </div>
@@ -704,7 +705,10 @@ function renderLessonGrid() {
 
     const data = scores['L' + lesson.id];
     const bestText = data ? data.bestScore + 'pts (' + data.bestPct + '%)' : '--';
-    const badge = (data && data.bestPct >= 70) ? '⭐' : '';
+    let badge = '';
+    if (data && data.bestPct >= 90) badge = '⭐⭐⭐';
+    else if (data && data.bestPct >= 70) badge = '⭐⭐';
+    else if (data && data.bestPct >= 50) badge = '⭐';
 
     card.setAttribute('aria-label',
       'Lesson ' + lesson.id + ': ' + lesson.title + ', ' + lesson.wordCount + ' words' +
@@ -1143,6 +1147,10 @@ function showEndScreen() {
   // Save high score
   if (activeLesson) saveHighScore(activeLesson.id, score, correctCount, VOCAB.length);
 
+  // Show/hide next lesson button
+  var nextIdx = LESSONS.findIndex(function(l) { return l.id === activeLesson.id; }) + 1;
+  $('next-lesson-btn').style.display = nextIdx < LESSONS.length ? '' : 'none';
+
   spawnConfetti();
   setTimeout(spawnConfetti, 700);
 
@@ -1165,6 +1173,10 @@ $('pron-btn').addEventListener('click', function() {
 });
 $('back-from-start').addEventListener('click', showSelectScreen);
 $('back-from-end').addEventListener('click', showSelectScreen);
+$('next-lesson-btn').addEventListener('click', function() {
+  var nextIdx = LESSONS.findIndex(function(l) { return l.id === activeLesson.id; }) + 1;
+  if (nextIdx < LESSONS.length) selectLesson(LESSONS[nextIdx].id);
+});
 
 choiceBtns.forEach(function(btn, i) {
   btn.addEventListener('click', function() { handleAnswer(i); });
