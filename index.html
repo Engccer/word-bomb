@@ -204,6 +204,7 @@ body {
   border-color: var(--accent2);
   outline: none;
 }
+.back-btn { min-height: 44px; }
 
 /* ===== SCREEN: GAME ===== */
 #game-screen { display: none; width: 100%; max-width: 900px; padding: 1.5em; }
@@ -561,7 +562,7 @@ body {
   <span class="bomb-icon" aria-hidden="true">💣</span>
   <h1>WORD BOMB</h1>
   <p class="app-subtitle">중학교 1학년 영어 단어 퀴즈</p>
-  <div class="lesson-grid" id="lesson-grid" role="list" aria-label="레슨 목록"></div>
+  <div class="lesson-grid" id="lesson-grid" aria-label="레슨 목록"></div>
   <div class="total-stats" id="total-stats"></div>
   <p class="select-hint">레슨을 선택하여 게임을 시작하세요</p>
 </div>
@@ -699,7 +700,6 @@ function renderLessonGrid() {
   LESSONS.forEach(lesson => {
     const card = document.createElement('button');
     card.className = 'lesson-card';
-    card.setAttribute('role', 'listitem');
     card.dataset.lesson = lesson.id;
 
     const data = scores['L' + lesson.id];
@@ -756,7 +756,9 @@ function selectLesson(lessonId) {
 }
 
 function showSelectScreen() {
+  gameState = 'select';
   hideAllScreens();
+  clearInterval(timerInterval);
   document.getElementById('select-screen').style.display = 'block';
   renderLessonGrid();
   // Focus first card
@@ -766,6 +768,7 @@ function showSelectScreen() {
 }
 
 function showStartScreen() {
+  gameState = 'start';
   hideAllScreens();
   document.getElementById('start-screen').style.display = 'block';
   document.getElementById('lesson-subtitle').textContent = activeLesson.subtitle;
@@ -1041,6 +1044,7 @@ function handleTimeUp() {
   $('game-screen').style.animation = 'shake 0.5s';
   setTimeout(function() { $('game-screen').style.animation = ''; }, 500);
 
+  updateScore();
   showBanner('BOOM!', 'var(--wrong)');
   showWordInfo();
   announce('시간 초과! 폭탄이 터졌습니다. 정답은 ' + shuffledVocab[currentIndex].word + '입니다.');
