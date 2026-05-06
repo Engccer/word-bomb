@@ -65,5 +65,39 @@ const LESSONS = [
       { word: "trash", korean: "n. 쓰레기", eng_def: "things that you do not want and throw away", example: "He is throwing away the trash in the park.", audio: "trash.wav", def_audio: "def_trash.wav" },
       { word: "unhealthy", korean: "a. 건강하지 않은", eng_def: "not strong or well", example: "I won't eat unhealthy food like hamburgers often.", audio: "unhealthy.wav", def_audio: "def_unhealthy.wav" }
     ]
+  },
+  {
+    id: 3,
+    title: "Let's Be Positive",
+    subtitle: "Lesson 3 - New Words",
+    wordCount: 26,
+    vocab: [
+      { word: "angry", korean: "a. 화가 난", eng_def: "a. having strong feelings about something that you dislike very much", example: "She looks angry at my mistake.", audio: "angry.wav", def_audio: "def_angry.wav" },
+      { word: "attitude", korean: "n. 태도", eng_def: "n. the way you think or feel about something", example: "I like her friendly attitude.", audio: "attitude.wav", def_audio: "def_attitude.wav" },
+      { word: "be proud of", korean: "~을 자랑으로 여기다", eng_def: "to feel pleased about something good that you have or have done", example: "My grandparents are proud of me.", audio: "be_proud_of.wav", def_audio: "def_be_proud_of.wav" },
+      { word: "cheer", korean: "v. 응원하다", eng_def: "v. to encourage somebody or to give them hope or comfort", example: "He gave me some flowers and cheered me up.", audio: "cheer.wav", def_audio: "def_cheer.wav" },
+      { word: "contest", korean: "n. 대회", eng_def: "n. a competition or game in which people try to win", example: "They won first place in the dance contest.", audio: "contest.wav", def_audio: "def_contest.wav" },
+      { word: "empty", korean: "a. 비어 있는 / v. 비우다", eng_def: "a. having nothing inside / v. to remove everything from inside something", example: "After the party, the plates were empty.", audio: "empty.wav", def_audio: "def_empty.wav" },
+      { word: "famous", korean: "a. 유명한", eng_def: "a. known by very many or most people", example: "France is famous for its great food.", audio: "famous.wav", def_audio: "def_famous.wav" },
+      { word: "fault", korean: "n. 잘못", eng_def: "n. responsibility for a problem, mistake, bad situation, etc.", example: "She was late for school, but it wasn't her fault.", audio: "fault.wav", def_audio: "def_fault.wav" },
+      { word: "fried", korean: "a. 튀긴", eng_def: "a. cooked in hot oil", example: "Fried food always tastes good.", audio: "fried.wav", def_audio: "def_fried.wav" },
+      { word: "happen", korean: "v. 일어나다", eng_def: "v. to take place, especially without being planned", example: "What will happen next?", audio: "happen.wav", def_audio: "def_happen.wav" },
+      { word: "interested", korean: "a. 관심이 있는", eng_def: "a. wanting to know more", example: "He is interested in the reading club.", audio: "interested.wav", def_audio: "def_interested.wav" },
+      { word: "lose", korean: "v. 잃어버리다, (경기에) 지다", eng_def: "v. to not be able to find something; to fail to succeed in a game, competition, etc.", example: "He lost his cell phone at the park.", audio: "lose.wav", def_audio: "def_lose.wav" },
+      { word: "minute", korean: "n. 분", eng_def: "n. a unit of time equal to 60 seconds", example: "The bus will arrive in five minutes.", audio: "minute.wav", def_audio: "def_minute.wav" },
+      { word: "nervous", korean: "a. 초조한, 긴장한", eng_def: "a. worried or frightened", example: "I was a little nervous on my first day at school.", audio: "nervous.wav", def_audio: "def_nervous.wav" },
+      { word: "positive", korean: "a. 긍정적인", eng_def: "a. full of hope and confidence", example: "Happiness is a positive emotion.", audio: "positive.wav", def_audio: "def_positive.wav" },
+      { word: "quit", korean: "v. 그만두다", eng_def: "v. to stop doing something", example: "He will quit his job this month.", audio: "quit.wav", def_audio: "def_quit.wav" },
+      { word: "result", korean: "n. 결과", eng_def: "n. something that happens because of something else", example: "He was happy with his math test result.", audio: "result.wav", def_audio: "def_result.wav" },
+      { word: "seat", korean: "n. 자리, 좌석", eng_def: "n. something you can sit on", example: "The window seat has a great view.", audio: "seat.wav", def_audio: "def_seat.wav" },
+      { word: "situation", korean: "n. 상황", eng_def: "n. the conditions that exist at a particular time and place", example: "Can you explain the situation again?", audio: "situation.wav", def_audio: "def_situation.wav" },
+      { word: "support", korean: "n. 지지, 응원 / v. 지지하다", eng_def: "n. emotional or practical help / v. to help and encourage someone, often when they are having problems", example: "I got a lot of support from Peter last week.", audio: "support.wav", def_audio: "def_support.wav" },
+      { word: "surprised", korean: "a. 놀란", eng_def: "a. feeling or showing surprise because of something unexpected", example: "She was surprised at my gift.", audio: "surprised.wav", def_audio: "def_surprised.wav" },
+      { word: "terrible", korean: "a. 끔찍한", eng_def: "a. very bad", example: "The traffic was terrible this morning.", audio: "terrible.wav", def_audio: "def_terrible.wav" },
+      { word: "text", korean: "n. (문자) 메시지 / v. 메시지를 보내다", eng_def: "n. a text message / v. to send someone a written message using a cell phone", example: "I'm waiting for a text from my friend.", audio: "text.wav", def_audio: "def_text.wav" },
+      { word: "throw", korean: "v. 던지다", eng_def: "v. to make something go through the air, by moving your arm", example: "I throw a ball, and my dog catches it.", audio: "throw.wav", def_audio: "def_throw.wav" },
+      { word: "upset", korean: "a. 속상한, 마음이 상한", eng_def: "a. being unhappy and worried", example: "I felt upset because of my poor grades.", audio: "upset.wav", def_audio: "def_upset.wav" },
+      { word: "waste", korean: "v. 낭비하다 / n. 쓰레기", eng_def: "v. to use more money, time, resources, etc. than is needed / n. things that are not wanted and get thrown away", example: "Don't waste your time on unimportant things.", audio: "waste.wav", def_audio: "def_waste.wav" }
+    ]
   }
 ];

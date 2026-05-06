@@ -1007,6 +1007,7 @@ function loadQuestion() {
     tickCounter++;
     var pct = (timeLeft / (limit * 10)) * 100;
     $('timer-fill').style.width = pct + '%';
+    $('timer-fill').parentElement.setAttribute('aria-valuenow', Math.round(pct));
     $('timer-text').textContent = (timeLeft / 10).toFixed(1) + 's';
 
     if (tickCounter % 10 === 0) playTickSound();
