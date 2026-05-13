@@ -469,6 +469,32 @@ body {
 }
 .final-stats { font-size: 1.2rem; color: #aaa; margin: 1em 0 1.5em; line-height: 2; }
 .end-buttons { display: flex; gap: 1em; justify-content: center; flex-wrap: wrap; }
+.copy-result-btn {
+  font-family: 'Bangers', cursive;
+  font-size: 1.4rem;
+  padding: 0.5em 1.6em;
+  margin-top: 1.2em;
+  background: transparent;
+  color: var(--accent2);
+  border: 2px solid var(--accent2);
+  border-radius: 50px;
+  cursor: pointer;
+  letter-spacing: 1.5px;
+  min-height: 48px;
+  transition: all 0.2s;
+}
+.copy-result-btn:hover, .copy-result-btn:focus {
+  background: var(--accent2);
+  color: #0a1428;
+  outline: 3px solid var(--accent);
+  outline-offset: 4px;
+}
+.copy-result-btn.copied {
+  background: #4ade80;
+  border-color: #4ade80;
+  color: #0a1428;
+  transform: scale(1.04);
+}
 
 /* PARTICLES & CONFETTI */
 .particle {
@@ -639,6 +665,7 @@ body {
     <button class="start-btn" id="next-lesson-btn" style="display:none;">NEXT LESSON →</button>
     <button class="back-btn" id="back-from-end">← LESSONS</button>
   </div>
+  <button class="copy-result-btn" id="copy-result-btn" aria-label="결과를 클립보드에 복사하여 다른 곳에 붙여넣기">📋 결과 복사</button>
 </div>
 
 <script>
@@ -913,6 +940,70 @@ function announce(msg) {
   requestAnimationFrame(function() { el.textContent = msg; });
 }
 
+// ===== RESULT COPY =====
+function buildResultText() {
+  var pct = Math.round((correctCount / VOCAB.length) * 100);
+  var today = new Date().toISOString().slice(0, 10);
+  var subtitle = activeLesson ? (' — ' + activeLesson.subtitle) : '';
+  var lessonId = activeLesson ? activeLesson.id : '';
+  return (
+    '🔤 Word Bomb — Lesson ' + lessonId + subtitle + '\n' +
+    '점수: ' + score + '점\n' +
+    '정답: ' + correctCount + ' / ' + VOCAB.length + ' (' + pct + '%)\n' +
+    '최고 콤보: x' + maxCombo + '\n' +
+    '📅 ' + today + '\n' +
+    '🎮 https://engccer.github.io/word-bomb/'
+  );
+}
+
+function copyResultToClipboard() {
+  var btn = $('copy-result-btn');
+  var original = btn.dataset.originalText || btn.innerHTML;
+  btn.dataset.originalText = original;
+  var text = buildResultText();
+
+  var onSuccess = function() {
+    btn.innerHTML = '✓ 복사 완료!';
+    btn.classList.add('copied');
+    announce('결과가 클립보드에 복사되었습니다. 이제 Padlet이나 Google Classroom 등에 붙여넣으세요.');
+    setTimeout(function() {
+      btn.innerHTML = original;
+      btn.classList.remove('copied');
+    }, 2200);
+  };
+  var onFail = function() {
+    btn.innerHTML = '⚠ 복사 실패';
+    announce('복사에 실패했어요. 선생님께 말씀드려 주세요.');
+    setTimeout(function() { btn.innerHTML = original; }, 2200);
+  };
+
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(onSuccess).catch(function() {
+      fallbackCopy(text, onSuccess, onFail);
+    });
+  } else {
+    fallbackCopy(text, onSuccess, onFail);
+  }
+}
+
+function fallbackCopy(text, onSuccess, onFail) {
+  var ta = document.createElement('textarea');
+  ta.value = text;
+  ta.setAttribute('readonly', '');
+  ta.style.position = 'fixed';
+  ta.style.left = '-9999px';
+  document.body.appendChild(ta);
+  ta.select();
+  try {
+    var ok = document.execCommand('copy');
+    document.body.removeChild(ta);
+    if (ok) onSuccess(); else onFail();
+  } catch (e) {
+    document.body.removeChild(ta);
+    onFail();
+  }
+}
+
 // ===== GAME STATE =====
 let gameState = 'select';
 let currentIndex = 0;
@@ -1178,6 +1269,7 @@ $('next-lesson-btn').addEventListener('click', function() {
   var nextIdx = LESSONS.findIndex(function(l) { return l.id === activeLesson.id; }) + 1;
   if (nextIdx < LESSONS.length) selectLesson(LESSONS[nextIdx].id);
 });
+$('copy-result-btn').addEventListener('click', copyResultToClipboard);
 
 choiceBtns.forEach(function(btn, i) {
   btn.addEventListener('click', function() { handleAnswer(i); });
