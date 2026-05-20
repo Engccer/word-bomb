@@ -99,5 +99,41 @@ const LESSONS = [
       { word: "upset", korean: "a. 속상한, 마음이 상한", eng_def: "a. being unhappy and worried", example: "I felt upset because of my poor grades.", audio: "upset.wav", def_audio: "def_upset.wav" },
       { word: "waste", korean: "v. 낭비하다 / n. 쓰레기", eng_def: "v. to use more money, time, resources, etc. than is needed / n. things that are not wanted and get thrown away", example: "Don't waste your time on unimportant things.", audio: "waste.wav", def_audio: "def_waste.wav" }
     ]
+  },
+  {
+    id: 4,
+    title: "The Joy of Traveling",
+    subtitle: "Lesson 4 - New Words",
+    wordCount: 28,
+    vocab: [
+      { word: "amazing", korean: "a. 놀라운", eng_def: "a. very good in a surprising way", example: "The special effects in the movie were really amazing.", audio: "amazing.wav", def_audio: "def_amazing.wav" },
+      { word: "amusement", korean: "n. 재미, 놀이", eng_def: "n. the feeling you have when you think something is funny", example: "The amusement park is open at night this week.", audio: "amusement.wav", def_audio: "def_amusement.wav" },
+      { word: "be full of", korean: "~으로 가득 차다", eng_def: "to contain a lot of something", example: "The box was full of toys for children.", audio: "be_full_of.wav", def_audio: "def_be_full_of.wav" },
+      { word: "bicycle", korean: "n. 자전거", eng_def: "n. a two-wheeled vehicle that you sit on and move by turning the two pedals", example: "She rides her bicycle to school every day.", audio: "bicycle.wav", def_audio: "def_bicycle.wav" },
+      { word: "cliff", korean: "n. 절벽", eng_def: "n. a high area of rock with a very steep side", example: "The river went down the cliff and made a beautiful waterfall.", audio: "cliff.wav", def_audio: "def_cliff.wav" },
+      { word: "explore", korean: "v. 탐험하다", eng_def: "v. to travel to a new place to learn about it", example: "We explored the narrow streets of the old town.", audio: "explore.wav", def_audio: "def_explore.wav" },
+      { word: "fantastic", korean: "a. 환상적인", eng_def: "a. extremely good", example: "The weather was fantastic for a picnic.", audio: "fantastic.wav", def_audio: "def_fantastic.wav" },
+      { word: "fee", korean: "n. 요금", eng_def: "n. an amount of money that you pay to do or use something", example: "There is no entrance fee to the zoo today.", audio: "fee.wav", def_audio: "def_fee.wav" },
+      { word: "information", korean: "n. 정보", eng_def: "n. facts or details about something", example: "My friend shared helpful information about the test.", audio: "information.wav", def_audio: "def_information.wav" },
+      { word: "island", korean: "n. 섬", eng_def: "n. a piece of land that is surrounded by water", example: "How many islands are there around Jeju-do?", audio: "island.wav", def_audio: "def_island.wav" },
+      { word: "joy", korean: "n. 기쁨", eng_def: "n. great happiness", example: "The puppy jumped with joy at the smell of food.", audio: "joy.wav", def_audio: "def_joy.wav" },
+      { word: "local", korean: "n. 주민, 현지인", eng_def: "n. a person who lives in a particular area, city, or town", example: "We asked a local for the way to the lake park.", audio: "local.wav", def_audio: "def_local.wav" },
+      { word: "museum", korean: "n. 박물관", eng_def: "n. a place where interesting objects of art or historical items are displayed", example: "The museum has Picasso's paintings.", audio: "museum.wav", def_audio: "def_museum.wav" },
+      { word: "narrow", korean: "a. 좁은", eng_def: "a. long and not wide; small from one side to the other side", example: "The road to the top of the mountain was narrow.", audio: "narrow.wav", def_audio: "def_narrow.wav" },
+      { word: "on one's way to", korean: "…으로 가는 길에", eng_def: "in the process of coming, going, or traveling", example: "We are on our way to the store.", audio: "on_one_s_way_to.wav", def_audio: "def_on_one_s_way_to.wav" },
+      { word: "order", korean: "v. 주문하다, 정리하다 / n. 순서", eng_def: "v. to ask for something in a restaurant; to put in order or to arrange something / n. the way that you arrange things", example: "Let's order a pizza for lunch.", audio: "order.wav", def_audio: "def_order.wav" },
+      { word: "pearl", korean: "n. 진주", eng_def: "n. a hard, white, round object inside the shell of a sea creature and used to make jewelry", example: "In many cultures, a pearl means good luck.", audio: "pearl.wav", def_audio: "def_pearl.wav" },
+      { word: "perfect", korean: "a. 완벽한", eng_def: "a. without any flaws or mistakes", example: "His answer to the question was perfect.", audio: "perfect.wav", def_audio: "def_perfect.wav" },
+      { word: "rental", korean: "n. 대여", eng_def: "n. the act of paying for the use of something", example: "The bike rental costs $6 an hour.", audio: "rental.wav", def_audio: "def_rental.wav" },
+      { word: "schedule", korean: "n. 일정, 스케줄", eng_def: "n. a plan, program, or timetable", example: "What's on your schedule for tonight?", audio: "schedule.wav", def_audio: "def_schedule.wav" },
+      { word: "souvenir", korean: "n. 기념품", eng_def: "n. something you keep as a reminder of a special visit or event", example: "I bought a scarf as a souvenir of my trip to London.", audio: "souvenir.wav", def_audio: "def_souvenir.wav" },
+      { word: "spend", korean: "v. (시간을) 보내다", eng_def: "v. to use time doing something or being somewhere", example: "My uncle spends his vacation traveling.", audio: "spend.wav", def_audio: "def_spend.wav" },
+      { word: "terrace", korean: "n. 테라스", eng_def: "n. an open area, especially outside a house or restaurant, where you can sit and eat", example: "A small table and four chairs were on the terrace.", audio: "terrace.wav", def_audio: "def_terrace.wav" },
+      { word: "tour", korean: "n. 여행", eng_def: "n. a visit to a place, especially to look around it and learn about it", example: "We joined a bus tour of the city.", audio: "tour.wav", def_audio: "def_tour.wav" },
+      { word: "trail", korean: "n. 오솔길", eng_def: "n. a path through a countryside, mountain, or forest area", example: "We hike along the forest trail on weekends.", audio: "trail.wav", def_audio: "def_trail.wav" },
+      { word: "vacation", korean: "n. 방학", eng_def: "n. a time away from work or school when you can relax", example: "During the vacation, we visited friends in another city.", audio: "vacation.wav", def_audio: "def_vacation.wav" },
+      { word: "view", korean: "n. 경치", eng_def: "n. the things that you can see from a place", example: "The window in my room has a nice view of the garden.", audio: "view.wav", def_audio: "def_view.wav" },
+      { word: "village", korean: "n. 마을", eng_def: "n. a very small town", example: "There are many colorful houses in the village.", audio: "village.wav", def_audio: "def_village.wav" }
+    ]
   }
 ];
