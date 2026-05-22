@@ -943,16 +943,12 @@ function announce(msg) {
 // ===== RESULT COPY =====
 function buildResultText() {
   var pct = Math.round((correctCount / VOCAB.length) * 100);
-  var today = new Date().toISOString().slice(0, 10);
-  var subtitle = activeLesson ? (' — ' + activeLesson.subtitle) : '';
   var lessonId = activeLesson ? activeLesson.id : '';
   return (
-    '🔤 Word Bomb — Lesson ' + lessonId + subtitle + '\n' +
-    '점수: ' + score + '점\n' +
-    '정답: ' + correctCount + ' / ' + VOCAB.length + ' (' + pct + '%)\n' +
-    '최고 콤보: x' + maxCombo + '\n' +
-    '📅 ' + today + '\n' +
-    '🎮 https://engccer.github.io/word-bomb/'
+    '🔤 Word Bomb — Lesson ' + lessonId + '\n' +
+    '- 점수: ' + score + '점\n' +
+    '- 정답: ' + correctCount + '/' + VOCAB.length + ' (' + pct + '%)\n' +
+    '- 최고 콤보: x' + maxCombo
   );
 }
 
