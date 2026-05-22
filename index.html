@@ -944,11 +944,13 @@ function announce(msg) {
 function buildResultText() {
   var pct = Math.round((correctCount / VOCAB.length) * 100);
   var lessonId = activeLesson ? activeLesson.id : '';
+  var pad = function(n) { return String(n).padStart(2, '0'); };
+  var d = new Date();
+  var stamp = d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()) +
+    ' ' + pad(d.getHours()) + ':' + pad(d.getMinutes());
   return (
-    '🔤 Word Bomb — Lesson ' + lessonId + '\n' +
-    '- 점수: ' + score + '점\n' +
-    '- 정답: ' + correctCount + '/' + VOCAB.length + ' (' + pct + '%)\n' +
-    '- 최고 콤보: x' + maxCombo
+    '🔤 Word Bomb — Lesson ' + lessonId + ' · ' + stamp + '\n' +
+    '점수 ' + score + '점 · 정답 ' + correctCount + '/' + VOCAB.length + ' (' + pct + '%)'
   );
 }
 
