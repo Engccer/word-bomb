@@ -135,5 +135,41 @@ const LESSONS = [
       { word: "view", korean: "n. 경치", eng_def: "n. the things that you can see from a place", example: "The window in my room has a nice view of the garden.", audio: "view.wav", def_audio: "def_view.wav" },
       { word: "village", korean: "n. 마을", eng_def: "n. a very small town", example: "There are many colorful houses in the village.", audio: "village.wav", def_audio: "def_village.wav" }
     ]
+  },
+  {
+    id: 5,
+    title: "Think like Sherlock Holmes!",
+    subtitle: "Lesson 5 - New Words",
+    wordCount: 28,
+    vocab: [
+      { word: "bakery", korean: "n. 빵집", eng_def: "n. a place where bread and cakes are made or sold", example: "The bakery is famous for its cheesecakes.", audio: "bakery.wav", def_audio: "def_bakery.wav" },
+      { word: "code", korean: "n. 암호", eng_def: "n. a set of letters, numbers, symbols, etc., that is used to secretly send messages to someone", example: "We unlocked a door with a special code.", audio: "code.wav", def_audio: "def_code.wav" },
+      { word: "crime", korean: "n. 범죄", eng_def: "n. an action that the law does not allow", example: "Writing on walls can be a crime.", audio: "crime.wav", def_audio: "def_crime.wav" },
+      { word: "criminal", korean: "n. 범죄자", eng_def: "n. a person who does something against the law, like stealing or hurting others", example: "The police caught the criminal this morning.", audio: "criminal.wav", def_audio: "def_criminal.wav" },
+      { word: "damage", korean: "v. 손상을 입히다", eng_def: "v. to physically harm something", example: "The strong wind and heavy rain damaged the city.", audio: "damage.wav", def_audio: "def_damage.wav" },
+      { word: "expensive", korean: "a. 비싼", eng_def: "a. costing a lot of money", example: "Those sneakers are too expensive for me.", audio: "expensive.wav", def_audio: "def_expensive.wav" },
+      { word: "explain", korean: "v. 설명하다", eng_def: "v. to tell someone about something so that he or she can understand it", example: "The teacher explained the math problem to us.", audio: "explain.wav", def_audio: "def_explain.wav" },
+      { word: "eyewitness", korean: "n. 목격자", eng_def: "n. someone who saw a crime or an accident", example: "We are looking for eyewitnesses of the accident.", audio: "eyewitness.wav", def_audio: "def_eyewitness.wav" },
+      { word: "fall off", korean: "떨어지다", eng_def: "to drop to the ground from a high object", example: "He fell off the stairs and broke his leg.", audio: "fall_off.wav", def_audio: "def_fall_off.wav" },
+      { word: "feed", korean: "v. 먹이를 주다", eng_def: "v. to give food to an animal", example: "Don't feed the fish in the pond.", audio: "feed.wav", def_audio: "def_feed.wav" },
+      { word: "flash", korean: "n. 플래시 (촬영)", eng_def: "n. a bright light on a camera that you use when taking photographs inside a building", example: "I'll take a picture of you with the flash.", audio: "flash.wav", def_audio: "def_flash.wav" },
+      { word: "guard", korean: "n. 경비원", eng_def: "n. a person whose job is to protect a person, place or thing from danger or attack", example: "There are guards at the entrance of the palace.", audio: "guard.wav", def_audio: "def_guard.wav" },
+      { word: "height", korean: "n. 키", eng_def: "n. how tall someone or something is", example: "Yuna is the same height as me.", audio: "height.wav", def_audio: "def_height.wav" },
+      { word: "janitor", korean: "n. 청소부, 관리인", eng_def: "n. a person in charge of cleaning and fixing things in a building", example: "The school janitor fixed the broken chair for me.", audio: "janitor.wav", def_audio: "def_janitor.wav" },
+      { word: "language", korean: "n. 언어", eng_def: "n. the system of words and grammar that people living in a country or area use to speak and write to each other", example: "Lily can speak five languages.", audio: "language.wav", def_audio: "def_language.wav" },
+      { word: "owner", korean: "n. 주인", eng_def: "n. someone who owns something", example: "Who is the owner of this laptop?", audio: "owner.wav", def_audio: "def_owner.wav" },
+      { word: "pet", korean: "n. 반려동물", eng_def: "n. an animal that you keep at home", example: "Miley is a wonderful pet for my family.", audio: "pet.wav", def_audio: "def_pet.wav" },
+      { word: "reason", korean: "n. 근거", eng_def: "n. something that makes it right or fair to do something", example: "Do you have any reasons for the choice?", audio: "reason.wav", def_audio: "def_reason.wav" },
+      { word: "rule", korean: "n. 규칙", eng_def: "n. a statement of what you can or cannot do", example: "Being kind to everyone is our classroom rule.", audio: "rule.wav", def_audio: "def_rule.wav" },
+      { word: "run away", korean: "도망치다", eng_def: "to leave a place or person secretly and suddenly", example: "My dog often runs away with my sock.", audio: "run_away.wav", def_audio: "def_run_away.wav" },
+      { word: "scene", korean: "n. 현장, 장면", eng_def: "n. a place where something happens; a piece of a film or play, usually showing one situation", example: "The accident scene was near the bank.", audio: "scene.wav", def_audio: "def_scene.wav" },
+      { word: "secret", korean: "a. 비밀의", eng_def: "a. not known or seen by others", example: "The chef shared a secret recipe with us.", audio: "secret.wav", def_audio: "def_secret.wav" },
+      { word: "statement", korean: "n. 진술", eng_def: "n. something that you say or write officially", example: "Thanks to her statement, the police caught the criminal.", audio: "statement.wav", def_audio: "def_statement.wav" },
+      { word: "steal", korean: "v. 훔치다", eng_def: "v. to take something that belongs to someone else", example: "A cat is trying to steal the fish from the plate.", audio: "steal.wav", def_audio: "def_steal.wav" },
+      { word: "sunflower", korean: "n. 해바라기", eng_def: "n. a tall plant with a large yellow flower and a brown center", example: "The girl is putting a sunflower in her hair.", audio: "sunflower.wav", def_audio: "def_sunflower.wav" },
+      { word: "suspect", korean: "n. 용의자", eng_def: "n. a person who is believed to be guilty of something", example: "The suspect has brown hair and blue eyes.", audio: "suspect.wav", def_audio: "def_suspect.wav" },
+      { word: "wheelchair", korean: "n. 휠체어", eng_def: "n. a chair on wheels that people unable to walk use for moving around", example: "The building has wide doors for wheelchair users.", audio: "wheelchair.wav", def_audio: "def_wheelchair.wav" },
+      { word: "wig", korean: "n. 가발", eng_def: "n. an object with hair on it that someone wears on their head", example: "We took a photo with colorful wigs.", audio: "wig.wav", def_audio: "def_wig.wav" }
+    ]
   }
 ];
