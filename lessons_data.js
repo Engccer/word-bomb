@@ -171,5 +171,37 @@ const LESSONS = [
       { word: "wheelchair", korean: "n. 휠체어", eng_def: "n. a chair on wheels that people unable to walk use for moving around", example: "The building has wide doors for wheelchair users.", audio: "wheelchair.wav", def_audio: "def_wheelchair.wav" },
       { word: "wig", korean: "n. 가발", eng_def: "n. an object with hair on it that someone wears on their head", example: "We took a photo with colorful wigs.", audio: "wig.wav", def_audio: "def_wig.wav" }
     ]
+  },
+  {
+    id: 6,
+    title: "Good for the Earth, Good for Us",
+    subtitle: "Lesson 6 - New Words",
+    wordCount: 24,
+    vocab: [
+      { word: "challenge", korean: "n. 도전", eng_def: "n. something that needs great mental or physical effort to be done successfully", example: "Climbing a mountain is a great challenge for me.", audio: "challenge.wav", def_audio: "def_challenge.wav" },
+      { word: "completely", korean: "ad. 완전히", eng_def: "ad. in every way", example: "Sally completely changed her hairstyle.", audio: "completely.wav", def_audio: "def_completely.wav" },
+      { word: "container", korean: "n. 그릇, 용기", eng_def: "n. an object for holding things, such as a can, box, or bottle", example: "I put my lunch in a plastic container.", audio: "container.wav", def_audio: "def_container.wav" },
+      { word: "delivery", korean: "n. 배달", eng_def: "n. the act of taking goods, letters, etc. to people's houses or places of work", example: "We ordered a pizza, and the delivery man arrived within 30 minutes.", audio: "delivery.wav", def_audio: "def_delivery.wav" },
+      { word: "eat out", korean: "외식하다", eng_def: "to eat in a restaurant", example: "Let's eat out at our favorite restaurant tonight.", audio: "eat_out.wav", def_audio: "def_eat_out.wav" },
+      { word: "environment", korean: "n. 환경", eng_def: "n. the natural world, including water, air, land, and plants", example: "Plastic bags are bad for the environment.", audio: "environment.wav", def_audio: "def_environment.wav" },
+      { word: "favor", korean: "n. 호의, 친절", eng_def: "n. something helpful that you do for someone", example: "Will you do me a favor and turn off the light?", audio: "favor.wav", def_audio: "def_favor.wav" },
+      { word: "in return", korean: "대신에, 답례로", eng_def: "as a response, exchange, or reward for something", example: "Help others, and they may help you in return.", audio: "in_return.wav", def_audio: "def_in_return.wav" },
+      { word: "label", korean: "n. 상표", eng_def: "n. the name or symbol of a company that produces goods for sale", example: "First, take off the label from the bottle.", audio: "label.wav", def_audio: "def_label.wav" },
+      { word: "leader", korean: "n. 리더", eng_def: "n. a person who is in control of a group of people", example: "Dan is the leader of our dancing club.", audio: "leader.wav", def_audio: "def_leader.wav" },
+      { word: "leftover", korean: "n. 남은 음식", eng_def: "n. food remaining after a meal", example: "Dad loves making a new dish with leftovers.", audio: "leftover.wav", def_audio: "def_leftover.wav" },
+      { word: "machine", korean: "n. 기계", eng_def: "n. a piece of equipment that you use to do a job", example: "The store has a washing machine for shoes.", audio: "machine.wav", def_audio: "def_machine.wav" },
+      { word: "mean", korean: "v. 의미하다", eng_def: "v. to have something as a meaning", example: "The word tiny means very small.", audio: "mean.wav", def_audio: "def_mean.wav" },
+      { word: "one by one", korean: "하나하나씩", eng_def: "one person or thing following another in order", example: "Read the sentences one by one.", audio: "one_by_one.wav", def_audio: "def_one_by_one.wav" },
+      { word: "own", korean: "a. 자신의", eng_def: "a. belonging to a particular person or thing", example: "It was her own idea.", audio: "own.wav", def_audio: "def_own.wav" },
+      { word: "plant", korean: "n. 식물 / v. 심다", eng_def: "n. a living thing that has leaves and roots / v. to put a plant into the ground or into a container of soil so that it will grow", example: "Some plants need a lot of sunlight.", audio: "plant.wav", def_audio: "def_plant.wav" },
+      { word: "plog", korean: "v. 플로깅하다", eng_def: "v. to pick up trash while jogging", example: "I like to plog in the park every weekend.", audio: "plog.wav", def_audio: "def_plog.wav" },
+      { word: "produce", korean: "v. 생산하다", eng_def: "v. to make or grow something", example: "Healthy cows produce good milk for us.", audio: "produce.wav", def_audio: "def_produce.wav" },
+      { word: "recycle", korean: "v. 재활용하다", eng_def: "v. to put old paper, glass, or other materials through a special process so that they can be used again", example: "He decided to recycle his old phones.", audio: "recycle.wav", def_audio: "def_recycle.wav" },
+      { word: "reduce", korean: "v. 줄이다", eng_def: "v. to make something less or smaller", example: "Listening to music can reduce stress.", audio: "reduce.wav", def_audio: "def_reduce.wav" },
+      { word: "secondhand", korean: "a. 중고의", eng_def: "a. used by someone else before", example: "The store sells secondhand books at a cheap price.", audio: "secondhand.wav", def_audio: "def_secondhand.wav" },
+      { word: "sew", korean: "v. 바느질하다", eng_def: "v. to use a needle and thread to make or fix clothes", example: "She sewed a button on the shirt.", audio: "sew.wav", def_audio: "def_sew.wav" },
+      { word: "single", korean: "a. 단일의", eng_def: "a. only one", example: "I use a single monitor for my computer.", audio: "single.wav", def_audio: "def_single.wav" },
+      { word: "tear", korean: "v. 찢다", eng_def: "v. to pull paper, cloth, or another material into two pieces", example: "My dog enjoys tearing tissues.", audio: "tear.wav", def_audio: "def_tear.wav" }
+    ]
   }
 ];
